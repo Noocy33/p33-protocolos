@@ -1,0 +1,10 @@
+services:
+  p33:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - protocolos:/dados
+    restart: unless-stopped
+volumes:
+  protocolos:

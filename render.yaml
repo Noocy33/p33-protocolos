@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: p33-protocolos
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/config
+    envVars:
+      - key: P33_SECURE_COOKIE
+        value: "1"
