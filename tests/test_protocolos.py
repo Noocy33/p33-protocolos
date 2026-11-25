@@ -38,6 +38,29 @@ class ProtocolosTest(unittest.TestCase):
         app.DB = self.original_db
         self.folder.cleanup()
 
+    def test_cadastro_publico_cria_apenas_perfil_recepcao(self):
+        self.server.sem_login = False
+        result = self.request('/api/cadastro', {
+            'login': 'usuario.novo',
+            'senha': 'SenhaSegura123',
+            'confirmar_senha': 'SenhaSegura123',
+        })
+        self.assertEqual(result['login'], 'usuario.novo')
+        self.assertEqual(result['perfil'], 'recepcao')
+        with app.db() as db:
+            row = db.execute(
+                'SELECT perfil FROM usuarios WHERE login=?',
+                ('usuario.novo',),
+            ).fetchone()
+            self.assertEqual(row['perfil'], 'recepcao')
+        with self.assertRaises(HTTPError) as error:
+            self.request('/api/cadastro', {
+                'login': 'usuario.novo',
+                'senha': 'OutraSenha123',
+                'confirmar_senha': 'OutraSenha123',
+            })
+        self.assertEqual(error.exception.code, 409)
+
     def request(self, path, data=None, headers=None):
         headers = {'X-P33-Request': '1', **(headers or {})}
         if isinstance(data, dict):

@@ -368,6 +368,26 @@ class Handler(BaseHTTPRequestHandler):
                 if profile not in ('supervisao', 'recepcao'):
                     raise ValueError('Perfil inválido.')
                 return self.start_session(con, {'login': profile, 'perfil': profile})
+            if method == 'POST' and path == '/api/cadastro':
+                if getattr(self.server, 'sem_login', False):
+                    return self.reply(403, {'erro': 'O cadastro não está disponível no modo local sem login.'})
+                obj = self.objeto()
+                login = obj.get('login', '')
+                password = obj.get('senha', '')
+                confirmation = obj.get('confirmar_senha', '')
+                if not isinstance(login, str) or not re.fullmatch(r'[a-z0-9._-]{3,50}', login.strip().lower()):
+                    raise ValueError('Use de 3 a 50 caracteres: letras minúsculas, números, ponto, hífen ou sublinhado.')
+                if not isinstance(password, str) or len(password) < 12 or len(password) > 256:
+                    raise ValueError('A senha deve ter entre 12 e 256 caracteres.')
+                if not isinstance(confirmation, str) or password != confirmation:
+                    raise ValueError('A confirmação da senha não corresponde.')
+                login = login.strip().lower()
+                if con.execute('SELECT 1 FROM usuarios WHERE login=?', (login,)).fetchone():
+                    return self.reply(409, {'erro': 'Este usuário já está cadastrado.'})
+                save_user(con, login, password, 'recepcao')
+                con.commit()
+                row = con.execute('SELECT login,perfil FROM usuarios WHERE login=?', (login,)).fetchone()
+                return self.start_session(con, row)
             if method == 'POST' and path == '/api/login':
                 return self.login(con)
             user = ({'login': 'local', 'perfil': 'supervisao'} if self.server.sem_login

@@ -468,9 +468,23 @@ async function signIn(credentials, button, path = '/api/login') {
   catch (error) { $('login-error').textContent = error.message }
   finally { button.disabled = false }
 }
+$('toggle-signup').onclick = () => {
+  const signingUp = $('signup-confirmation').hidden
+  $('signup-confirmation').hidden = !signingUp
+  $('signup-confirmation').querySelector('input').required = signingUp
+  document.querySelector('.login-heading h2').textContent = signingUp ? 'Criar conta de recepção' : 'Acesse sua conta'
+  document.querySelector('.login-heading .sub').textContent = signingUp
+    ? 'Contas novas recebem acesso ao perfil de recepção.'
+    : 'Use suas credenciais corporativas para continuar.'
+  $('login-submit').textContent = signingUp ? 'Criar conta e entrar' : 'Entrar no sistema'
+  $('toggle-signup').textContent = signingUp ? 'Já tenho uma conta' : 'Criar uma conta de recepção'
+  $('login-error').textContent = ''
+  $('login-form').reset()
+}
 $('login-form').onsubmit = event => {
   event.preventDefault()
-  signIn(formObject(event.target), event.submitter)
+  const signingUp = !$('signup-confirmation').hidden
+  signIn(formObject(event.target), event.submitter, signingUp ? '/api/cadastro' : '/api/login')
 }
 $('demo-login').onclick = event => signIn({},event.target,'/api/demo-login')
 api('/api/config').then(config=>{ retencaoConfig = config; $('demo-login').hidden = $('demo').hidden = !config.demo; $('logout').hidden = config.sem_login }).catch(()=>{})

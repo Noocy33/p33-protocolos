@@ -21,7 +21,9 @@
    <div class="login-heading"><span class="eyebrow">Acesso seguro</span><h2>Acesse sua conta</h2><p class="sub">Use suas credenciais corporativas para continuar.</p></div>
    <form id="login-form"><label>Usuário<input name="login" autocomplete="username" placeholder="Digite seu usuário" required></label>
    <label>Senha<input name="senha" type="password" autocomplete="current-password" placeholder="Digite sua senha" required></label>
-   <button class="primary" type="submit">Entrar no sistema</button>
+   <label id="signup-confirmation" hidden>Confirmar senha<input name="confirmar_senha" type="password" autocomplete="new-password" placeholder="Repita sua senha"></label>
+   <button id="login-submit" class="primary" type="submit">Entrar no sistema</button>
+   <button id="toggle-signup" class="text-button" type="button">Criar uma conta de recepção</button>
    <button id="demo-login" class="demo-button" type="button" hidden>Entrar na demonstração</button>
    <p id="login-error" class="error" role="alert"></p></form>
   </div>
