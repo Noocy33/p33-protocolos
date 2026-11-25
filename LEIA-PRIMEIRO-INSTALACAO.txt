@@ -1,0 +1,59 @@
+PROTOCOLO ELETRÔNICO — INSTALAÇÃO DE AVALIAÇÃO NO WINDOWS
+
+Este pacote não contém os protocolos nem os documentos do outro computador.
+A lista começará vazia. Para a avaliação, use somente documentos fictícios.
+
+1. BAIXAR E EXTRAIR
+   Baixe o arquivo Protocolo-Eletronico-avaliacao.zip no computador da
+   supervisão. Clique com o botão direito no ZIP e escolha Extrair Tudo.
+   Abra a pasta extraída. Não execute os comandos dentro do ZIP sem extraí-lo.
+
+2. INSTALAR O PYTHON
+   Instale o Python 3.13 para Windows pelo site oficial:
+   https://www.python.org/downloads/windows/
+   Se o instalador oferecer a opção de adicionar o Python ao PATH, marque-a.
+   Feche e abra novamente o PowerShell após a instalação.
+
+3. INSTALAR O TESSERACT
+   Para ler texto em fotos e PDFs digitalizados, instale o Tesseract para
+   Windows. A documentação do projeto indica instaladores nesta página:
+   https://github.com/tesseract-ocr/tessdoc/blob/main/Installation.md
+   O pacote já inclui os dados de idioma português em dados/por.traineddata.
+
+4. ABRIR O POWERSHELL NA PASTA DO SISTEMA
+   No Explorador de Arquivos, abra a pasta extraída que contém app.py.
+   Clique na barra de endereço, digite powershell e pressione Enter.
+
+5. INSTALAR AS DEPENDÊNCIAS — APENAS NA PRIMEIRA VEZ
+   Copie a linha abaixo, cole no PowerShell e pressione Enter:
+
+   py -3.13 -m pip install -r requirements-windows.txt
+
+   Aguarde a instalação terminar. É necessária conexão com a internet para
+   baixar as bibliotecas. Se houver bloqueio na rede, verifique a mensagem.
+
+6. INICIAR O SISTEMA
+   Na mesma janela do PowerShell, execute:
+
+   py -3.13 app.py --sem-login --port 8095
+
+   Mantenha essa janela aberta. No navegador do mesmo computador, acesse:
+
+   http://127.0.0.1:8095
+
+   O sistema abrirá sem login. Para pará-lo, volte à janela do PowerShell e
+   pressione Ctrl+C. Nas próximas vezes, repita os passos 4 e 6.
+
+7. LIMITES DESTA VERSÃO
+   O modo sem login serve para avaliação local. Antes de usar dados reais,
+   devem ser definidos e aprovados o controle de acesso, a segurança do
+   computador e do armazenamento, os backups e os procedimentos do hospital.
+   O backup automático e o envio direto por e-mail não estão configurados.
+   A exclusão automática após 90 dias permanece desligada por padrão.
+   A leitura automática depende do documento e deve ser conferida no original.
+
+SE ALGO NÃO FUNCIONAR
+   Se o comando py não for reconhecido, confirme que o Python 3.13 e o
+   iniciador do Python para Windows foram instalados. Se a porta 8095 já
+   estiver em uso, inicie com --port 8080 e abra http://127.0.0.1:8080.
+   Guarde a mensagem de erro para facilitar o diagnóstico.

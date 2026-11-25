@@ -5,9 +5,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && useradd --system --uid 10001 p33 \
     && mkdir /dados && chown p33:p33 /dados
 WORKDIR /app
-COPY app.py leitura.py ./
+COPY requirements-export.txt ./
+RUN pip install --no-cache-dir -r requirements-export.txt
+COPY app.py leitura.py exportacao.py ./
 COPY web/ web/
 USER p33
 ENV P33_DB=/dados/p33.sqlite3 P33_HOST=0.0.0.0
 EXPOSE 8080
-CMD ["python", "app.py", "--demo"]
+CMD ["python", "app.py"]
