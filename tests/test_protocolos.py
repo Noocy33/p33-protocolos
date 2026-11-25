@@ -51,6 +51,9 @@ class ProtocolosTest(unittest.TestCase):
         manifest = self.request('/manifest.webmanifest')
         self.assertEqual(manifest['start_url'], '/')
         self.assertEqual(manifest['display'], 'standalone')
+        with urlopen(self.base + '/service-worker.js') as response:
+            self.assertEqual(response.headers.get_content_type(), 'text/javascript')
+            self.assertIn(b'Network-only', response.read())
         self.assertEqual({icon['sizes'] for icon in manifest['icons']}, {'192x192', '512x512'})
         for icon in manifest['icons']:
             with urlopen(self.base + icon['src']) as response:

@@ -2,6 +2,7 @@
   "id": "/",
   "name": "Protocolo Eletrônico",
   "short_name": "Protocolo",
+  "description": "Recebimento e acompanhamento de protocolos da supervisão de enfermagem.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

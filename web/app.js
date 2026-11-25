@@ -1,3 +1,6 @@
+if ('serviceWorker' in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register('/service-worker.js').catch(() => {})
+}
 const $ = id => document.getElementById(id)
 const status = {recebido:'A conferir', conferido:'Conferido', encaminhado:'Encaminhado', baixado:'Lançamento confirmado'}
 const types = {atestado:'Atestado', ponto:'Ocorrência de ponto', troca:'Troca de plantão', ferias:'Férias', afastamento:'Afastamento'}
