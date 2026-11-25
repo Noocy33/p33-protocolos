@@ -54,6 +54,8 @@ class ProtocolosTest(unittest.TestCase):
         with urlopen(self.base + '/service-worker.js') as response:
             self.assertEqual(response.headers.get_content_type(), 'text/javascript')
             self.assertIn(b'Network-only', response.read())
+        association = self.request('/.well-known/assetlinks.json')
+        self.assertEqual(association[0]['target']['namespace'], 'android_app')
         self.assertEqual({icon['sizes'] for icon in manifest['icons']}, {'192x192', '512x512'})
         for icon in manifest['icons']:
             with urlopen(self.base + icon['src']) as response:

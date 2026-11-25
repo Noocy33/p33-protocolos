@@ -349,6 +349,7 @@ class Handler(BaseHTTPRequestHandler):
                   '/style.css': ('style.css', 'text/css'),
                   '/manifest.webmanifest': ('manifest.webmanifest', 'application/manifest+json'),
                   '/service-worker.js': ('service-worker.js', 'text/javascript'),
+                  '/.well-known/assetlinks.json': ('assetlinks.json', 'application/json'),
                   '/icon-192.png': ('icon-192.png', 'image/png'),
                   '/icon-512.png': ('icon-512.png', 'image/png')}
         if method == 'GET' and path in assets:
